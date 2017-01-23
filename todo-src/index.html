@@ -11,26 +11,32 @@
 
   <body ng-app="app">
     <h1 class="text-center">My little to do app!</h1>
-    
+
     <div id="todo" class="col-xs-6 col-xs-offset-3" ng-controller="MainCtrl">
-  
+
         <div class="input-group">
-          <input type="text" class="form-control" placeholder="Item to add to todo list" ng-model="newItem">
+          <input type="text" class="form-control" placeholder="Item to add to todo list" ng-model="newItem.item" id="todoInput">
           <span class="input-group-btn">
-            <button class="btn btn-default" type="button" ng-click="addItem()">
+            <select value="Low" name="priority" id="priority">
+                    <option>High</option>
+                    <option>Moderate</option>
+                    <option selected="selected">Low</option>
+            </select>
+            <button id="add-btn" class="btn btn-default" type="button" ng-click="addItem()">
               Add
               <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
             </button>
           </span>
         </div><!-- /input-group -->
-        
+
       <h2>stuff i gotta do asap</h2>
-      
+
       <ul class="list-group">
         <!-- http://www.w3schools.com/css/css_float.asp -->
         <li class="list-group-item clearfix" ng-repeat="do in todos">
-          
-          <span>{{do}}</span>
+
+          <span>{{do.item}}</span> --
+          <span>{{do.priority}}</span>
           <button class="btn btn-danger pull-right" type="button" ng-click="deleteItem(do)">
             <span class="glyphicon glyphicon-trash " aria-hidden="true"></span>
           </button>
@@ -38,7 +44,7 @@
         </li>
       </ul>
     </div>
-    
+
   </body>
 
 </html>
