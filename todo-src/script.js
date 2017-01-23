@@ -3,17 +3,20 @@
 var myApp = angular.module('app', []);
 
 myApp.controller('MainCtrl', function ($scope){
-  $scope.todos = [{item:"Learn Angular", priority:"Moderate"}, {item:"Learn node", priority:"Low"}];
+  $scope.todos = [{item:"Learn Angular", priority:"Moderate", editing:false}, {item:"Learn node", priority:"Low", editing:false}];
   $scope.newItem = {
         item: "",
-        priority: ""
+        priority: "",
+        editing: false
   };
+  $scope.editTextBox = "";
 
   $scope.addItem = function(){
     console.log("in add");
     if ($scope.newItem["item"] !== ""){
       $scope.newItem["item"] = document.getElementById("todoInput").value;
       $scope.newItem["priority"] = document.getElementById("priority").value;
+      $scope.newItem["editing"] = false;
       $scope.todos.push($scope.newItem);
       $scope.newItem = "";
     }
@@ -25,7 +28,27 @@ myApp.controller('MainCtrl', function ($scope){
     $scope.todos.splice(index, 1);
   }
 
-
+  $scope.editItem = function(item){
+    console.log("in edit");
+    var index = $scope.todos.indexOf(item);
+    var isEditingElsewhere = false;
+    for (i = 0; i < $scope.todos.length; i++){
+      if (i !== index && $scope.todos[i].editing == true){
+        isEditingElsewhere = true;
+      }
+    }
+    //if editing is true somewhere other than index, do nothing, user should only be able to edit 1 item at a time
+    //this doesn't stop the text / edit text field from hiding and showing, but it stops the function from breaking
+    //This could be improved, but is basically functional
+    if (!isEditingElsewhere){
+        if ($scope.todos[index].editing){
+            $scope.todos[index].item = $scope.editTextBox;
+        } else {
+            $scope.editTextBox = $scope.todos[index].item;
+        }
+        $scope.todos[index].editing = !$scope.todos[index].editing;
+    }
+  }
 });
 
 /*************************
