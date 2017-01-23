@@ -3,22 +3,21 @@
 var myApp = angular.module('app', []);
 
 myApp.controller('MainCtrl', function ($scope){
-  $scope.todos = [{item:"Learn Angular", priority:"Moderate"}, {item:"Learn node", priority:"Low"}];
+  $scope.todos = [{item:"Learn Angular", priority:"Moderate", editing:false}, {item:"Learn node", priority:"Low", editing:false}];
   $scope.newItem = {
         item: "",
-        priority: ""
+        priority: "",
+        editing: false
   };
-  $scope.editing = [false, false];
   $scope.editTextBox = "";
-  $scope.newItem = "";
 
   $scope.addItem = function(){
     console.log("in add");
     if ($scope.newItem["item"] !== ""){
       $scope.newItem["item"] = document.getElementById("todoInput").value;
       $scope.newItem["priority"] = document.getElementById("priority").value;
+      $scope.newItem["editing"] = false;
       $scope.todos.push($scope.newItem);
-      $scope.editing.push(false);
       $scope.newItem = "";
     }
   }
@@ -27,15 +26,14 @@ myApp.controller('MainCtrl', function ($scope){
     console.log("in delete");
     var index = $scope.todos.indexOf(item);
     $scope.todos.splice(index, 1);
-    $scope.editing.splice(index, 1);
   }
 
   $scope.editItem = function(item){
     console.log("in edit");
     var index = $scope.todos.indexOf(item);
     var isEditingElsewhere = false;
-    for (i = 0; i < $scope.editing.length; i++){
-      if (i !== index && $scope.editing[i] == true){
+    for (i = 0; i < $scope.todos.length; i++){
+      if (i !== index && $scope.todos[i].editing == true){
         isEditingElsewhere = true;
       }
     }
@@ -43,12 +41,12 @@ myApp.controller('MainCtrl', function ($scope){
     //this doesn't stop the text / edit text field from hiding and showing, but it stops the function from breaking
     //This could be improved, but is basically functional
     if (!isEditingElsewhere){
-        if ($scope.editing[index]){
+        if ($scope.todos[index].editing){
             $scope.todos[index].item = $scope.editTextBox;
         } else {
             $scope.editTextBox = $scope.todos[index].item;
         }
-        $scope.editing[index] = !$scope.editing[index];
+        $scope.todos[index].editing = !$scope.todos[index].editing;
     }
   }
 });
