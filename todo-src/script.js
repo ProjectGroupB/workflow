@@ -8,6 +8,9 @@ myApp.controller('MainCtrl', function ($scope){
         item: "",
         priority: ""
   };
+  $scope.editing = [false, false];
+  $scope.editTextBox = "";
+  $scope.newItem = "";
 
   $scope.addItem = function(){
     console.log("in add");
@@ -15,7 +18,7 @@ myApp.controller('MainCtrl', function ($scope){
       $scope.newItem["item"] = document.getElementById("todoInput").value;
       $scope.newItem["priority"] = document.getElementById("priority").value;
       $scope.todos.push($scope.newItem);
-      $scope.edits.push(false);
+      $scope.editing.push(false);
       $scope.newItem = "";
     }
   }
@@ -24,7 +27,7 @@ myApp.controller('MainCtrl', function ($scope){
     console.log("in delete");
     var index = $scope.todos.indexOf(item);
     $scope.todos.splice(index, 1);
-    $scope.edits.splice(index, 1);
+    $scope.editing.splice(index, 1);
   }
 
   $scope.editItem = function(item){
@@ -41,14 +44,13 @@ myApp.controller('MainCtrl', function ($scope){
     //This could be improved, but is basically functional
     if (!isEditingElsewhere){
         if ($scope.editing[index]){
-            $scope.todos[index] = $scope.editTextBox;
+            $scope.todos[index].item = $scope.editTextBox;
         } else {
-            $scope.editTextBox = $scope.todos[index];
+            $scope.editTextBox = $scope.todos[index].item;
         }
         $scope.editing[index] = !$scope.editing[index];
     }
   }
-
 });
 
 /*************************

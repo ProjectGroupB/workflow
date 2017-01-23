@@ -12,11 +12,6 @@ body {
       padding: 3px 10px;
 }
 
-itemText {
-  width: 85%;
-  display: inline;
-}
-
 .btn {
   border-radius: 15%;
   padding: 5px 12px;
