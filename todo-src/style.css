@@ -1,4 +1,13 @@
 /* Styles go here */
 body {
-  background: blue;
+  background: #8fb4ef;
+}
+
+#priority{
+      padding: 8px 20px;
+      font-size: 15px;
+}
+
+#add-btn{
+      padding: 3px 10px;
 }
