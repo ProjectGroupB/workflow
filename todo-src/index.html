@@ -29,10 +29,16 @@
       <ul class="list-group">
         <!-- http://www.w3schools.com/css/css_float.asp -->
         <li class="list-group-item clearfix" ng-repeat="do in todos">
-          
-          <span>{{do}}</span>
-          <button class="btn btn-danger pull-right" type="button" ng-click="deleteItem(do)">
+          <input type="text" class="editText form-control" ng-model="$parent.editTextBox" ng-show="hideEdit">
+
+          <span id="itemText" ng-hide="hideText">{{do}}</span>
+
+          <button class="btn btn-danger pull-right" name="delete" type="button" ng-click="deleteItem(do)">
             <span class="glyphicon glyphicon-trash " aria-hidden="true"></span>
+          </button>
+
+          <button class="btn btn-warning pull-right" name="edit" type="button" ng-click="editItem(do); hideEdit = !hideEdit; hideText = !hideText">
+            <span class="glyphicon glyphicon-edit " aria-hidden="true"></span>
           </button>
 
         </li>
