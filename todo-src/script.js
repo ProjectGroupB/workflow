@@ -3,12 +3,15 @@
 var myApp = angular.module('app', []);
 
 myApp.controller('MainCtrl', function ($scope){
-  $scope.todos = [{item:"Learn Angular", priority:"Moderate", editing:false}, {item:"Learn node", priority:"Low", editing:false}];
+  $scope.todos = [{item:"Learn Angular", priority:"Moderate", editing:false, completed:false}, {item:"Learn node", priority:"Low", editing:false, completed:false}];
   $scope.newItem = {
         item: "",
         priority: "",
-        editing: false
+        editing: false,
+        completed: false
   };
+  $scope.number = $scope.todos.length;
+  $scope.noCompleted = 0;
   $scope.editTextBox = "";
 
   $scope.addItem = function(){
@@ -17,15 +20,28 @@ myApp.controller('MainCtrl', function ($scope){
       $scope.newItem["item"] = document.getElementById("todoInput").value;
       $scope.newItem["priority"] = document.getElementById("priority").value;
       $scope.newItem["editing"] = false;
+      $scope.newItem["completed"] = false;
       $scope.todos.push($scope.newItem);
       $scope.newItem = "";
     }
+    $scope.number++;
   }
+
+  $scope.checkedOff = function(item){
+        var index = $scope.todos.indexOf(item);
+
+        if(!$scope.todos[index].completed){
+             $scope.todos[index].completed = true;
+              $scope.noCompleted++;
+              $scope.number--;
+        }
+ }
 
   $scope.deleteItem = function(item){
     console.log("in delete");
     var index = $scope.todos.indexOf(item);
     $scope.todos.splice(index, 1);
+    $scope.number = $scope.todos.length;
   }
 
   $scope.editItem = function(item){
@@ -33,7 +49,7 @@ myApp.controller('MainCtrl', function ($scope){
     var index = $scope.todos.indexOf(item);
     var isEditingElsewhere = false;
     for (i = 0; i < $scope.todos.length; i++){
-      if (i !== index && $scope.todos[i].editing == true){
+      if ((i !== index && $scope.todos[i].editing == true) && !$scope.todos[i].completed){
         isEditingElsewhere = true;
       }
     }

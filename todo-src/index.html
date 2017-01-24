@@ -30,18 +30,19 @@
         </div><!-- /input-group -->
 
       <h2>stuff i gotta do asap</h2>
+      <h3>Completed:<span class:"nums">&nbsp{{noCompleted}}</span>&nbsp&nbspTo-do:<span class:"nums">&nbsp{{number}}</span></h3>
 
       <ul class="list-group">
         <!-- http://www.w3schools.com/css/css_float.asp -->
         <li class="list-group-item clearfix" ng-repeat="do in todos">
-          <span input class="btn btn-success pull-right" type="button" ng-click="completedStyle={color:'red'}">
+          <span input class="btn btn-success pull-right" type="button" ng-click="checkedOff(do); completedStyle = {color:'#b1b2b5'}">
               <span class="glyphicon glyphicon-ok " aria-hidden="true"></span>
           </span>
 
           <input type="text" class="editText form-control" ng-model="$parent.editTextBox" ng-show="hideEdit">
-          <span ng-hide="hideText" ng-style="completedStyle">{{do.item}}</span>
-          <span ng-hide="hideText" ng-style="completedStyle">--</span>
-          <span ng-hide="hideText" ng-style="completedStyle">{{do.priority}}</span>
+          <span class="todoText" ng-hide="hideText" ng-style="completedStyle">{{do.item}}</span>
+          <span class="todoText" ng-hide="hideText" ng-style="completedStyle">--</span>
+          <span class="todoText" ng-hide="hideText" ng-style="completedStyle">{{do.priority}}</span>
           <button class="btn btn-danger pull-right" type="button" ng-click="deleteItem(do)">
             <span class="glyphicon glyphicon-trash " aria-hidden="true"></span>
           </button>
